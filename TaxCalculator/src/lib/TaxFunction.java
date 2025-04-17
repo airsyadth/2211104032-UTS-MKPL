@@ -27,18 +27,14 @@ public class TaxFunction {
 			numberOfChildren = 3;
 		}
 		
+		int nonTaxable = 54000000;
 		if (isMarried) {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - (54000000 + 4500000 + (numberOfChildren * 1500000))));
-		}else {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - 54000000));
+    		nonTaxable += 4500000;
 		}
+		nonTaxable += Math.min(numberOfChildren, 3) * 1500000;
+
+		int netIncome = ((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - nonTaxable;
+		return Math.max(0, (int) Math.round(0.05 * netIncome));
 		
-		if (tax < 0) {
-			return 0;
-		}else {
-			return tax;
-		}
-			 
 	}
-	
 }
