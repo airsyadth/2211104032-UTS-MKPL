@@ -1,7 +1,9 @@
 package lib;
 
 public class TaxFunction {
-
+	private static final int BASE_NON_TAXABLE = 54000000;
+	private static final int MARRIED_BONUS = 4500000;
+	private static final int CHILD_BONUS = 1500000;
 	
 	/**
 	 * Fungsi untuk menghitung jumlah pajak penghasilan pegawai yang harus dibayarkan setahun.
@@ -27,13 +29,13 @@ public class TaxFunction {
 			numberOfChildren = 3;
 		}
 		
-		int nonTaxable = 54000000;
+		int nonTaxableIncome = BASE_NON_TAXABLE;
 		if (isMarried) {
-    		nonTaxable += 4500000;
+    		nonTaxableIncome += MARRIED_BONUS;
 		}
-		nonTaxable += Math.min(numberOfChildren, 3) * 1500000;
+nonTaxableIncome += Math.min(numberOfChildren, 3) * CHILD_BONUS;
 
-		int netIncome = ((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - nonTaxable;
+		int netIncome = ((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - nonTaxableIncome;
 		return Math.max(0, (int) Math.round(0.05 * netIncome));
 		
 	}
